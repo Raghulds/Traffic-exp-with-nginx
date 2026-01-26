@@ -59,6 +59,26 @@ func main() {
 		_ = start
 	})
 
+	mux.HandleFunc("/fast", func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		time.Sleep(5 * time.Millisecond)
+
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("fast\n"))
+
+		log.Printf("[FAST] took=%v\n", time.Since(start))
+	})
+
+	mux.HandleFunc("/slow", func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		time.Sleep(500 * time.Millisecond)
+
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("slow\n"))
+
+		log.Printf("[SLOW] took=%v\n", time.Since(start))
+	})
+
 	log.Println("Starting go server on :8081")
 	log.Fatal(http.ListenAndServe(":8081", mux))
 }
