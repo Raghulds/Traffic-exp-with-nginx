@@ -3,8 +3,8 @@ NGINX, LB
 
 ## About NGINX
 Request flow:
-* Connection acceptance - A worker process accepts the conn. One event loop can hadle thousands of connections
-* Request parsing - NGINX parses HTTP mathod, path, headers, body
+* Connection acceptance - A worker process accepts the conn. One event loop can handle thousands of connections
+* Request parsing - NGINX parses HTTP method, path, headers, body
 * Decision layer - Brain of NGINX
     request
     ├─ server block (host)
@@ -306,4 +306,3 @@ Run lua script with wrk to simulate large request body,
 
 Watch live memory usage with command,
     top -pid WORKER-PROCESS-ID
-

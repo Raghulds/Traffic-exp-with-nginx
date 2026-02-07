@@ -79,6 +79,21 @@ func main() {
 		log.Printf("[SLOW] took=%v\n", time.Since(start))
 	})
 
+	mux.HandleFunc("/random-fails", func(w http.ResponseWriter, r *http.Request) {
+		rid := r.Header.Get("X-Request-ID")
+		log.Printf("rid=%s start", rid)
+		// if rand.Intn(10) < 5 {
+		// 	w.WriteHeader(http.StatusOK)
+		// 	w.Write([]byte("ok"))
+		// 	return
+		// }
+		time.Sleep(1500 * time.Millisecond)
+
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("ok"))
+		log.Printf("rid=%s done", rid)
+	})
+
 	log.Println("Starting go server on :8081")
 	log.Fatal(http.ListenAndServe(":8081", mux))
 }
